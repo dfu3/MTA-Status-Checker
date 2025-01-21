@@ -3,7 +3,7 @@
 from update_data import update, DELAYS
 import time
 from datetime import datetime
-from flask import Flask, jsonify
+from flask import Flask
 import threading
 
 app = Flask(__name__)
