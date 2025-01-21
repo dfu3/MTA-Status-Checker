@@ -50,7 +50,6 @@ class TestEndpoints(unittest.TestCase):
             'currently_delayed': False,
             'delay_start': None
         }
-        service_time = (datetime.now() - self.service_start).total_seconds()
         response = self.test_client.get(f'/uptime/{line}')
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
