@@ -72,7 +72,6 @@ def check_mta_delays(url):
 def update():
     """
     Update the global DELAYS dictionary with the current subway delay information.
-
     Fetches data from the GTFS real-time feeds, determines which subway lines are
     delayed, and updates the DELAYS dictionary to reflect the current state of delays.
 
@@ -86,7 +85,6 @@ def update():
         delayed_lines = delayed_lines | check_mta_delays(url)
     
     diff = set(DELAYS.keys()) - delayed_lines
-    print(DELAYS)
     for line in diff: 
         if DELAYS[line]['currently_delayed']:
             DELAYS[line]['currently_delayed'] = False
