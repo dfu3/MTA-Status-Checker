@@ -4,7 +4,7 @@ from flask import Flask
 from update_data import DELAYS
 from api import calculate_uptime, app
 
-class TestEndpoints(unittest.TestCase):
+class TestAPI(unittest.TestCase):
     def setUp(self):
         """
         Set up test data and a Flask test client.
