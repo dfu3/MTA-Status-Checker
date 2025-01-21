@@ -9,10 +9,16 @@ import threading
 app = Flask(__name__)
 service_start = datetime.now()
 
+POLLING_RATE_SECONDS = 10
+
 def background_task():
+    """
+    Call the update function to internal store to MTA live alert feed
+    Runs continuously while flask app is live 
+    """
     while True:
         update()
-        time.sleep(10)
+        time.sleep(POLLING_RATE_SECONDS)
 
 def calculate_uptime(line_data, service_time):
     """
