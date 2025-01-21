@@ -59,7 +59,6 @@ def update():
         delayed_lines = delayed_lines | check_mta_delays(url)
     
     diff = set(DELAYS.keys()) - delayed_lines
-
     for line in diff: 
         if DELAYS[line]['currently_delayed']:
             DELAYS[line]['currently_delayed'] = False
@@ -78,3 +77,4 @@ def update():
             DELAYS[line]['currently_delayed'] = True
             DELAYS[line]['delay_start'] = req_time
             print(f'Line {line} is experiencing delays')
+

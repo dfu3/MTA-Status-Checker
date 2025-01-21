@@ -52,4 +52,4 @@ if __name__ == "__main__":
     thread = threading.Thread(target=background_task)
     thread.daemon = True
     thread.start()
-    app.run(debug=True)
+    app.run(debug=False)
