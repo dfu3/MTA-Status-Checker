@@ -1,13 +1,10 @@
 # update_data.py
 
 import requests
-import json
 from google.transit import gtfs_realtime_pb2
 from protobuf_to_dict import protobuf_to_dict
 from datetime import datetime
-from pprint import pprint as pp
 
-GTFS_URL = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs'
 GTFS_URL_BASE = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/'
 SUBWAY_FEEDS = [
     'nyct%2Fgtfs-ace',
@@ -61,15 +58,12 @@ def update():
         url = GTFS_URL_BASE + feed
         delayed_lines = delayed_lines | check_mta_delays(url)
     
-    no_longer_delayed = set(DELAYS.keys()) - delayed_lines
+    diff = set(DELAYS.keys()) - delayed_lines
 
-    changed = False
-
-    for line in no_longer_delayed: 
+    for line in diff: 
         if DELAYS[line]['currently_delayed']:
             DELAYS[line]['currently_delayed'] = False
             DELAYS[line]['total_delayed'] += (req_time - DELAYS[line]['delay_start']).total_seconds()
-            changed = True
             print(f'Line {line} is is now recovered')
 
     for line in delayed_lines:
@@ -79,10 +73,8 @@ def update():
                 'total_delayed': 0,
                 'currently_delayed': True,
             }
-            changed = True
             print(f'Line {line} is experiencing delays')
         elif line in DELAYS and not DELAYS[line]['currently_delayed']:
             DELAYS[line]['currently_delayed'] = True
             DELAYS[line]['delay_start'] = req_time
-            changed = True
             print(f'Line {line} is experiencing delays')
